@@ -1,7 +1,7 @@
 //Author: Bryce Egley
 //Date Started: March 26, 2017
 //This program will play the card game of Golf
-//Info on Gold Card Game https://en.wikipedia.org/wiki/Golf_(card_game)
+//Info on Golf Card Game https://en.wikipedia.org/wiki/Golf_(card_game)
 import java.util.*;
 import java.io.*;
 import java.util.Random;
@@ -73,17 +73,18 @@ public class GolfMain {
       //Start While Loop for game
       char gameEnd = 'y';
      while (gameEnd == 'y' || gameEnd == 'Y') {
-         /*while (player5 flip up doesn't = 6) {
+         int end = 0;
+         while (end == 0) {
             //if statement for if someone reaches 6 to finish all players
             char choice = choose();
             //Flip up facedown card
             if (choice == 'f') {
-               int flip2 = validInput(1,6,"Enter Card to Flip: ");
+               /*int flip2 = validInput(1,6,"Enter Card to Flip: ");
                while (player.getHand().get(flip2-1).getVisible() != false) {
                   System.out.println("ERROR: Card already flipped.");
                   flip2 = validInput(1,6,"Enter Card to Flip: ");
                }
-               player.flip(flip2-1);
+               player.flip(flip2-1);*/
                //Put top card onto discard pile
                
                
@@ -101,11 +102,11 @@ public class GolfMain {
             
             //Take card on discard pile
             } else {
-               int replace = validInput(1,6,"Enter Card to replace: ");
+               /*int replace = validInput(1,6,"Enter Card to replace: ");
                while (player.getHand().get(replace-1).getVisible() != false) {
                   System.out.println("ERROR: Card already flipped.");
                   replace = validInput(1,6,"Enter Card to replace: ");
-               }
+               }*/
                //replace face down card 
                
                //move face down card to discard pile
@@ -113,12 +114,18 @@ public class GolfMain {
             }
             //Have AI's do their turns
             
+            //Check if anyone went out, 6 cards flipped up
+            for (int z = 0; z < playersSize; z++) {
+               if (playerFlip[z] == 6) {
+                  end = 1;   
+               }
+            }   
          }
          //Ask user to play again or end game
          System.out.print("Would you like to play again? Enter y or n: ");
          Scanner scanChoose = new Scanner(System.in);
          gameEnd = scanChoose.next().charAt(0);
-      }*/
+      }
    }
    
    //Ask player to flip, take discard, or take top of deck card

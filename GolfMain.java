@@ -94,26 +94,61 @@ public class GolfMain {
             //Draw card on top of deck
             } else if (choice == 't') {
                //Do you want to take this card (y/n)?
-               
+               System.out.println("You drew a " + "Rank: " + deck.peek().getNum() + " Suit: " + deck.peek().getSuit()); 
+               char take = yn("Do you want to take this card (y/n)? : ");
                //Yes
-               //Where do you want to place it?
-               
+               if (take == 'y') {
+                  //Where do you want to place it?
+                  int flip2 = validInput(1,6,"Enter Card to Flip: ");
+                  while (table.get(0).getHand().get(flip2-1).getVisible() != false) {
+                     System.out.println("ERROR: Card already flipped.");
+                     flip2 = validInput(1,6,"Enter spot to place in3: ");
+                  }
+                  //Take card at index out of hand place, put top of deck in hand
+                  Card temp = table.get(0).switchCard(flip2-1,deck.pop());
+                  //Flip Card
+                  table.get(0).flip(flip2-1);
+                  //Put card on top of discard
+                  discard.push(temp);
+                  playerFlip[0]++;
+                  System.out.println("Player Flip " + playerFlip[0]);
+                  System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
                //No
+               } else {
+               char tFlip = yn("Do you want to flip a card?(y/n): ");
                //Discard and flip?
-               
-               //Discard and nothing?
-            
+               if (tFlip == 'y') {
+                  int flip2 = validInput(1,6,"Enter Card to Flip: ");
+                  while (table.get(0).getHand().get(flip2-1).getVisible() != false) {
+                     System.out.println("ERROR: Card already flipped.");
+                     flip2 = validInput(1,6,"Enter Card to Flip: ");
+                  }
+                  table.get(0).flip(flip2-1);
+                  playerFlip[0]++;
+                  System.out.println("Player Flip " + playerFlip[0]);
+                  //Put top card onto discard pile
+                  discard.push(deck.pop());
+                  System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
+               }
+               discard.push(deck.pop());
+               }
             //Take card on discard pile
             } else {
-               /*int replace = validInput(1,6,"Enter Card to replace: ");
-               while (player.getHand().get(replace-1).getVisible() != false) {
-                  System.out.println("ERROR: Card already flipped.");
-                  replace = validInput(1,6,"Enter Card to replace: ");
-               }*/
-               //replace face down card 
-               
-               //move face down card to discard pile
-  
+               //Where do you want to place it?
+                  int flip2 = validInput(1,6,"Enter Card to Flip: ");
+                  while (table.get(0).getHand().get(flip2-1).getVisible() != false) {
+                     System.out.println("ERROR: Card already flipped.");
+                     flip2 = validInput(1,6,"Enter spot to place in3: ");
+                  }
+                  //Take card at index out of hand place, put top of deck in hand
+                  Card temp = table.get(0).switchCard(flip2-1,discard.pop());
+                  //Flip Card
+                  table.get(0).flip(flip2-1);
+                  //Put card on top of discard
+                  discard.push(temp);
+                  playerFlip[0]++;
+                  System.out.println("Player Flip " + playerFlip[0]);
+                  System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
             }
             //Have AI's do their turns
             
@@ -122,8 +157,15 @@ public class GolfMain {
                if (playerFlip[z] == 6) {
                   end = 1;   
                }
-            }   
+            } 
+            //Print cards 
+            for (int j = 0; j < playersSize; j++) {
+               System.out.println("Player " + (j+1));
+               table.get(j).gamePrint();
+            }  
          }
+         //Scores
+         
          //Ask user to play again or end game
          System.out.print("Would you like to play again? Enter y or n: ");
          Scanner scanChoose = new Scanner(System.in);
@@ -138,6 +180,18 @@ public class GolfMain {
       char choice = scanChoose.next().charAt(0);
       while (choice != 'f' && choice != 't' && choice != 'd') {
          System.out.println("ERROR! Enter f,t or d!");
+         choice = scanChoose.next().charAt(0);
+      }
+      return choice;
+   }
+   
+   //Ask player for y or n input
+   public static char yn(String message) {
+      System.out.println(message);
+      Scanner scanChoose = new Scanner(System.in);
+      char choice = scanChoose.next().charAt(0);
+      while (choice != 'y' && choice != 'n') {
+         System.out.println("ERROR! Enter y or n!");
          choice = scanChoose.next().charAt(0);
       }
       return choice;

@@ -33,6 +33,14 @@ public class Player {
       return temp;
    }
    
+   //Switch card at index, with new card
+   public Card switchCard(int i, Card card) {
+      Card temp = this.hand.get(i);
+      this.hand.remove(i);
+      this.hand.add(i,card);
+      return temp;
+   }
+   
    //How many cards player has
    public int size() {
       return this.getHand().size();

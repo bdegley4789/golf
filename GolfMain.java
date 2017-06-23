@@ -36,7 +36,7 @@ public class GolfMain {
       //PLayer Flip up count
       int[] playerFlip = new int[playersSize];
       for (int i = 0; i < playersSize; i++) {
-         playerFlip[i] = 0;
+         playerFlip[i] = 2;
       }
       //Create Players
       ArrayList<Player> table = new ArrayList<Player>();
@@ -79,15 +79,18 @@ public class GolfMain {
             char choice = choose();
             //Flip up facedown card
             if (choice == 'f') {
-               /*int flip2 = validInput(1,6,"Enter Card to Flip: ");
-               while (player.getHand().get(flip2-1).getVisible() != false) {
+               int flip2 = validInput(1,6,"Enter Card to Flip: ");
+               while (table.get(0).getHand().get(flip2-1).getVisible() != false) {
                   System.out.println("ERROR: Card already flipped.");
                   flip2 = validInput(1,6,"Enter Card to Flip: ");
                }
-               player.flip(flip2-1);*/
+               table.get(0).flip(flip2-1);
+               playerFlip[0]++;
+               System.out.println("Player Flip " + playerFlip[0]);
                //Put top card onto discard pile
-               
-               
+               discard.push(deck.pop());
+               System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
+
             //Draw card on top of deck
             } else if (choice == 't') {
                //Do you want to take this card (y/n)?

@@ -53,6 +53,11 @@ public class Player {
       }
    }
    
+   //Return number of card
+   public int specCard(int i) {
+      return this.getHand().get(i).getNum();
+   }
+   
    //Print current cards
    public void gamePrint() {
       for (int i = 0; i < this.size(); i++) {

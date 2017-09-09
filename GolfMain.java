@@ -37,7 +37,7 @@ public class GolfMain {
      //Start While Loop for game
      char gameEnd = 'y';
      while (gameEnd == 'y' || gameEnd == 'Y') {
-         //keep track fo current game score
+         //keep track of current game score
          int[] gameScore = new int[playersSize];
          //PLayer Flip up count
          int[] playerFlip = new int[playersSize];
@@ -75,7 +75,7 @@ public class GolfMain {
          Stack<Card> discard = new Stack<Card>(); 
          discard.push(deck.pop());
          System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
-      
+              
          int end = 0;
          while (end == 0) {
             //if statement for if someone reaches 6 to finish all players
@@ -103,7 +103,7 @@ public class GolfMain {
                if (take == 'y') {
                   //Where do you want to place it?
                   int flip2 = validInput(1,6,"Where do you want to place it: ");
-                  if (table.get(0).getHand().get(flip2-1).getVisible() != false) {
+                  if (table.get(0).getHand().get(flip2-1).getVisible() == false) {
                      //Take card at index out of hand place, put top of deck in hand
                      Card temp = table.get(0).switchCard(flip2-1,deck.pop());
                      //Flip Card
@@ -148,7 +148,7 @@ public class GolfMain {
             } else {
                //Where do you want to place it?
                   int flip2 = validInput(1,6,"Where do you want to place it: ");
-                  if (table.get(0).getHand().get(flip2-1).getVisible() != false) {
+                  if (table.get(0).getHand().get(flip2-1).getVisible() == false) {
                      //Take card at index out of hand place, put top of deck in hand
                      Card temp = table.get(0).switchCard(flip2-1,discard.pop());
                      //Flip Card
@@ -170,6 +170,7 @@ public class GolfMain {
                   }
             }
             //Have AI's do their turns
+            computerFlipOne(table);
             
             //Check if anyone went out, 6 cards flipped up
             for (int z = 0; z < playersSize; z++) {
@@ -260,6 +261,20 @@ public class GolfMain {
          }
       }
    }
+   
+   //Computer flips 2 random cards up
+   public static void computerFlipOne(ArrayList<Player> table) {
+      for (int j = 0; j < 1; j++) {
+         for (int i = 1; i < table.size(); i++) {
+            int compFlip1 = randInt(0,6-1);
+            while (table.get(i).getHand().get(compFlip1).getVisible() != false) {
+               compFlip1 = randInt(0,6-1);
+            }
+            table.get(i).flip(compFlip1);
+         }
+      }
+   }
+   
    
    //Ensure user types in valid input
    public static int validInput(int min, int max, String message) {

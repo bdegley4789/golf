@@ -49,7 +49,10 @@ public class Player {
    //Print current cards
    public void print() {
       for (int i = 0; i < this.size(); i++) {
-         System.out.println((i+1) + ":" + this.getHand().get(i).print());
+         System.out.print((i+1) + ":" + this.getHand().get(i).print() + " ");
+         if (i % 2 == 1) {
+            System.out.println();
+         }
       }
    }
    

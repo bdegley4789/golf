@@ -65,6 +65,7 @@ public class GolfMain {
          //Flip 2 Cards
          playerFlip(table.get(0));
          computerFlip(table);
+         System.out.println();
          
          //How game will print
          for (int j = 0; j < playersSize; j++) {
@@ -89,7 +90,7 @@ public class GolfMain {
                }
                table.get(0).flip(flip2-1);
                playerFlip[0]++;
-               System.out.println("Player Flip " + playerFlip[0]);
+               //System.out.println("Player Flip " + playerFlip[0]);
                //Put top card onto discard pile
                discard.push(deck.pop());
                System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
@@ -111,7 +112,7 @@ public class GolfMain {
                      //Put card on top of discard
                      discard.push(temp);
                      playerFlip[0]++;
-                     System.out.println("Player Flip " + playerFlip[0]);
+                     //System.out.println("Player Flip " + playerFlip[0]);
                      System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
                   //This else is for if player chooses a position already flipped up so it doesn't increment playerFlip
                   } else {
@@ -121,7 +122,7 @@ public class GolfMain {
                      table.get(0).flip(flip2-1);
                      //Put card on top of discard
                      discard.push(temp);
-                     System.out.println("Player Flip " + playerFlip[0]);
+                     //System.out.println("Player Flip " + playerFlip[0]);
                      System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
                   }
                   
@@ -137,7 +138,7 @@ public class GolfMain {
                   }
                   table.get(0).flip(flip2-1);
                   playerFlip[0]++;
-                  System.out.println("Player Flip " + playerFlip[0]);
+                  //System.out.println("Player Flip " + playerFlip[0]);
                   //Put top card onto discard pile
                   discard.push(deck.pop());
                   System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
@@ -156,7 +157,7 @@ public class GolfMain {
                      //Put card on top of discard
                      discard.push(temp);
                      playerFlip[0]++;
-                     System.out.println("Player Flip " + playerFlip[0]);
+                     //System.out.println("Player Flip " + playerFlip[0]);
                      System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
                   } else {
                      //Take card at index out of hand place, put top of deck in hand
@@ -165,12 +166,12 @@ public class GolfMain {
                      table.get(0).flip(flip2-1);
                      //Put card on top of discard
                      discard.push(temp);
-                     System.out.println("Player Flip " + playerFlip[0]);
+                     //System.out.println("Player Flip " + playerFlip[0]);
                      System.out.println("Discard Pile: " + "Rank: " + discard.peek().getNum() + " Suit: " + discard.peek().getSuit());
                   }
             }
             //Have AI's do their turns
-            computerFlipOne(table);
+            computerFlipOne(table,playerFlip);
             
             //Check if anyone went out, 6 cards flipped up
             for (int z = 0; z < playersSize; z++) {
@@ -178,12 +179,23 @@ public class GolfMain {
                   end = 1;   
                }
             } 
-            //Print cards 
-            for (int j = 0; j < playersSize; j++) {
-               System.out.println("Player " + (j+1));
-               table.get(j).gamePrint();
-            }  
+            System.out.println();
+            //Print cards
+            if (end == 0) { 
+               //Print hand
+               for (int j = 0; j < playersSize; j++) {
+                  System.out.println("Player " + (j+1));
+                  table.get(j).gamePrint();
+               }  
+            } else {
+               //Print Final hand all cards get flipped up
+               for (int jul = 0; jul < playersSize; jul++) {
+                  System.out.println("Player " + (jul+1));
+                  table.get(jul).print();
+               }
+            } 
          }
+         
          //Calculate scores
          for(int jm = 0; jm < playersSize; jm++) {
             for (int zs = 0; zs < 6; zs+=2) {
@@ -226,7 +238,7 @@ public class GolfMain {
    
    //Ask player for y or n input
    public static char yn(String message) {
-      System.out.println(message);
+      System.out.print(message);
       Scanner scanChoose = new Scanner(System.in);
       char choice = scanChoose.next().charAt(0);
       while (choice != 'y' && choice != 'n') {
@@ -263,7 +275,7 @@ public class GolfMain {
    }
    
    //Computer flips 2 random cards up
-   public static void computerFlipOne(ArrayList<Player> table) {
+   public static void computerFlipOne(ArrayList<Player> table, int[] playerFlip) {
       for (int j = 0; j < 1; j++) {
          for (int i = 1; i < table.size(); i++) {
             int compFlip1 = randInt(0,6-1);
@@ -271,6 +283,7 @@ public class GolfMain {
                compFlip1 = randInt(0,6-1);
             }
             table.get(i).flip(compFlip1);
+            playerFlip[i]++;
          }
       }
    }
